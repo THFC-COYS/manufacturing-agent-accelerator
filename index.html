@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Manufacturing Agentic Transformation Accelerator</title>
+<meta name="description" content="A working reference accelerator for agentic AI transformation in manufacturing, mapped to the Microsoft stack: Azure AI Foundry, Azure IoT and industrial edge, Dynamics 365, Microsoft Fabric, Microsoft Copilot, and Microsoft Defender for IoT, with OT and IT safety boundaries. Built by Greg Lucas as an independent portfolio artifact.">
+<style>
+  :root{--ink:#101418;--muted:#5a6672;--line:#dde3ea;--bg:#f6f8fb;--blue:#0067b8;--blue-dark:#004578;--teal:#038387;--card:#ffffff;--good:#107c10;--warn:#986f0b;--bad:#a4262c}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Segoe UI",-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55}
+  .wrap{max-width:920px;margin:0 auto;padding:32px 20px 64px}
+  header.hero{background:linear-gradient(135deg,#0b1f3a,#0067b8);color:#fff;border-radius:16px;padding:36px 32px;margin-bottom:24px}
+  header.hero h1{margin:0 0 8px;font-size:2rem;line-height:1.15}
+  header.hero p{margin:0;opacity:.94;max-width:680px}
+  header.hero .byline{margin-top:14px;font-size:.9rem;opacity:.85}
+  header.hero .pill{display:inline-block;margin-top:14px;border:1px solid rgba(255,255,255,.5);border-radius:999px;padding:4px 12px;font-size:.82rem;opacity:.95}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:24px;margin-bottom:20px}
+  h2{margin:0 0 10px;font-size:1.25rem}
+  h3{margin:18px 0 6px;font-size:1.05rem}
+  p.lede{color:var(--muted);margin:0 0 8px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-top:14px}
+  .pattern{border:1px solid var(--line);border-radius:12px;padding:16px;background:#fbfcfe}
+  .pattern h3{margin:0 0 6px;color:var(--blue-dark)}
+  .pattern p{margin:0 0 8px;font-size:.95rem}
+  .pattern .outcome{font-weight:650;color:var(--teal)}
+  table{border-collapse:collapse;width:100%;margin-top:10px;font-size:.92rem}
+  th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+  th{background:#eef4fa;color:var(--blue-dark)}
+  .stack{font-size:.88rem;color:var(--muted)}
+  .stack b{color:var(--ink)}
+  .dims{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:14px}
+  .dim-chip{border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:#fbfcfe}
+  .dim-chip b{display:block;color:var(--blue-dark)}
+  .dim-chip span{font-size:.85rem;color:var(--muted)}
+  fieldset{border:1px solid var(--line);border-radius:12px;padding:16px;margin:0 0 16px}
+  fieldset.missing{border-color:var(--bad);background:#fdf3f2}
+  legend{font-weight:700;padding:0 6px;color:var(--blue-dark)}
+  .q{margin:14px 0}
+  .q p{margin:0 0 8px;font-weight:550}
+  .opts{display:flex;flex-wrap:wrap;gap:8px}
+  .opts label{border:1px solid var(--line);border-radius:999px;padding:6px 12px;cursor:pointer;font-size:.9rem;background:#fff}
+  .opts input{margin-right:6px;accent-color:var(--blue)}
+  .opts label:has(input:checked){border-color:var(--blue);background:#e5f1fa;font-weight:600}
+  button{appearance:none;border:0;border-radius:10px;background:var(--blue);color:#fff;font-size:1rem;font-weight:650;padding:13px 22px;cursor:pointer}
+  button:hover{background:var(--blue-dark)}
+  button.secondary{background:#fff;color:var(--blue-dark);border:1px solid var(--blue)}
+  .error{display:none;color:var(--bad);font-weight:600;margin-top:12px}
+  #results{display:none}
+  .score-head{display:flex;flex-wrap:wrap;gap:20px;align-items:center}
+  .score-big{font-size:3.2rem;font-weight:800;line-height:1;color:var(--blue-dark)}
+  .stage-badge{display:inline-block;background:#e5f1fa;color:var(--blue-dark);border-radius:999px;padding:4px 14px;font-weight:700}
+  .bar-row{display:grid;grid-template-columns:150px 1fr 44px;gap:10px;align-items:center;margin:8px 0}
+  .bar{height:12px;background:#edf1f6;border-radius:6px;overflow:hidden}
+  .bar i{display:block;height:100%;background:var(--blue)}
+  ul.plan{margin:6px 0 0;padding-left:20px}
+  ul.plan li{margin:5px 0}
+  .status{font-weight:700}
+  .status.ok{color:var(--good)} .status.partial{color:var(--warn)} .status.missing{color:var(--bad)}
+  .actions-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+  footer{color:var(--muted);font-size:.9rem;text-align:center;margin-top:28px}
+  a{color:var(--blue-dark)}
+  @media (max-width:560px){ .bar-row{grid-template-columns:110px 1fr 40px} header.hero{padding:26px 20px} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <h1>Manufacturing Agentic Transformation Accelerator</h1>
+    <p>A plant runs on physics, takt time, and people who can hear a bearing failing before the sensor does. Agents earn their place on that floor only if they respect the boundary between information and action: they may watch, predict, draft, and recommend, but the physical world moves on human authority. This accelerator packages the patterns, the readiness assessment, and the governance pack a manufacturer needs to run agents from the edge to the enterprise on the Microsoft stack.</p>
+    <p class="byline">A working reference artifact by Greg Lucas, founder of AIccountable and creator of agentlint. Every pattern here is designed around one rule: agents advise and prepare, humans authorize anything that touches a machine, a line, or a shipment.</p>
+    <span class="pill">Independent portfolio project. Not affiliated with or endorsed by Microsoft.</span>
+  </header>
+
+  <section class="card">
+    <h2>Why manufacturing, why now</h2>
+    <p class="lede">Manufacturing margin hides in unplanned downtime, scrap, schedule churn, and supplier surprises. The data to see all four earlier already exists, in historians, MES, maintenance logs, and supplier emails, but it lives in systems that were never designed to talk to each other, and the experts who read it are retiring faster than they can be replaced. Agents connect the signals and draft the response. The hard part is not the model. It is the boundary: operational technology and information technology have different failure costs, and an agent that confuses them is a safety incident waiting for a shift change.</p>
+    <p class="lede">This site runs that play in the open. Four patterns are mapped service by service to the Microsoft stack: Azure AI Foundry for agents, Azure IoT Operations and the industrial edge for plant data, Dynamics 365 for maintenance and production workflows, Microsoft Fabric for the data foundation, and Microsoft Defender for IoT guarding the OT side. An interactive assessment scores your operation across the Identify to Prove arc, and the governance section maps agentlint style checks to OT and IT safety controls and plant floor audit requirements.</p>
+  </section>
+
+  <section class="card">
+    <h2>Four transformation patterns</h2>
+    <p class="lede">Each pattern names the operational outcome, the agent design, and the Microsoft services it runs on. Every pattern ships with the same governance spine: OT and IT zones segmented with agents reading across the boundary through governed brokers, never writing into control systems, human authorization on every physical world action, and plant floor audit trails that survive a customer or regulator review.</p>
+    <div class="grid">
+
+      <div class="pattern">
+        <h3>1. Quality Inspection Agent</h3>
+        <p>Vision and data inspection at line speed: the agent reads camera and sensor feeds at the station, compares against the golden standard and process parameters, flags suspect parts with the evidence frame attached, and drafts the nonconformance record. Quality engineers disposition product. The agent never passes or scraps product on its own authority.</p>
+        <p class="outcome">Outcome: defect escapes fall as issues are caught at the station instead of the dock, inspectors review evidence instead of watching every part, and every flag is auditable.</p>
+        <p class="stack"><b>Stack:</b> Azure AI Foundry with Azure OpenAI vision models for defect reasoning, Azure IoT Operations at the edge for camera and sensor ingestion, Azure Arc managed edge deployment, Microsoft Fabric for quality data products and SPC analytics, Dynamics 365 Supply Chain Management quality orders for disposition workflow, Microsoft Defender for IoT for device and network protection.</p>
+      </div>
+
+      <div class="pattern">
+        <h3>2. Predictive Maintenance Copilot</h3>
+        <p>A copilot for maintenance teams that earns the name: it watches vibration, temperature, and runtime patterns, correlates them with work order history and the failure library, and drafts prioritized work orders with the likely fault, the parts list, and the safe procedure attached. Planners approve, schedule, and assign. Wrenches stay human.</p>
+        <p class="outcome">Outcome: unplanned downtime falls as failures get scheduled instead of suffered, planner time shifts from triage to planning, and tribal knowledge becomes a library instead of a retirement risk.</p>
+        <p class="stack"><b>Stack:</b> Azure IoT Operations and Azure Stream Analytics heritage edge processing for telemetry, Azure AI Foundry for the copilot and failure reasoning, Microsoft Fabric for the equipment data foundation, Dynamics 365 Field Service and Supply Chain Management asset management for work orders, Microsoft 365 Copilot surfaces for planner interaction, Defender for IoT across the sensor estate.</p>
+      </div>
+
+      <div class="pattern">
+        <h3>3. Production Scheduling Agent</h3>
+        <p>The schedule is a negotiation the plant re-runs every disruption. The agent drafts it: it reads orders, capacity, material availability, and changeover constraints, proposes a schedule with the trade offs named, and re-drafts on disruption with the impact of each option quantified. The production manager owns the final schedule and every expedite decision.</p>
+        <p class="outcome">Outcome: schedule drafting drops from hours to minutes, disruptions get options instead of chaos, and on time delivery improves without heroics.</p>
+        <p class="stack"><b>Stack:</b> Azure AI Foundry for the scheduling agent and constraint reasoning, Microsoft Fabric for orders, capacity, and inventory data products, Dynamics 365 Supply Chain Management planning and production control as the system of record, Copilot Studio for the planner conversation, Microsoft 365 Copilot in Teams for disruption alerts, Entra ID for role based access.</p>
+      </div>
+
+      <div class="pattern">
+        <h3>4. Supplier Risk Monitor</h3>
+        <p>An always on watch over the supply base: the monitor reads supplier financial signals, delivery performance, quality escapes, geopolitical and weather feeds, and the plant's own exposure, then briefs procurement with emerging risks ranked by production impact and draft mitigation options. Buyers decide. The monitor never contacts a supplier or moves an order.</p>
+        <p class="outcome">Outcome: supplier surprises surface weeks earlier, single source exposure is quantified instead of rumored, and procurement walks into negotiations with evidence.</p>
+        <p class="stack"><b>Stack:</b> Azure AI Foundry for the monitoring agent, Azure OpenAI for document and news reasoning, Microsoft Fabric for supplier and spend data products, Dynamics 365 Supply Chain Management vendor data, Azure AI Search over contracts and scorecards, Microsoft Purview for data governance, Defender for Cloud for platform protection.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>The Identify to Prove arc, adapted to manufacturing</h2>
+    <p class="lede">The assessment scores five stages of the transformation arc Greg Lucas uses at AIccountable, translated into plant and enterprise language.</p>
+    <div class="dims">
+      <div class="dim-chip"><b>Identify</b><span>Use case census, value cases, OT risk tiering</span></div>
+      <div class="dim-chip"><b>Train</b><span>Operator, maintenance, and planner readiness</span></div>
+      <div class="dim-chip"><b>Design</b><span>Segmented OT data, agent charters, physical action boundaries</span></div>
+      <div class="dim-chip"><b>Implement</b><span>Pilots behind human authorization gates</span></div>
+      <div class="dim-chip"><b>Prove</b><span>Plant floor audit trails, safety evidence, measured outcomes</span></div>
+    </div>
+  </section>
+
+  <form id="assessment" class="card" novalidate>
+    <h2>Agentic readiness assessment</h2>
+    <p class="lede">Fifteen questions, about three minutes. Answer for your manufacturer today, not the target state. Scale for every question: Not started (0), Ad hoc (1), In progress (2), Mostly in place (3), In place and measured (4).</p>
+    <div id="questions"></div>
+    <button type="submit">Score our readiness</button>
+    <p class="error" id="formError"></p>
+  </form>
+
+  <section id="results" class="card" aria-live="polite">
+    <h2>Your transformation roadmap</h2>
+    <div class="score-head">
+      <div><div class="score-big" id="overallScore">0</div><div class="lede">Overall readiness, out of 100</div></div>
+      <div><span class="stage-badge" id="stageBadge">Stage 1</span><p class="lede" id="stageBlurb" style="margin-top:8px;max-width:440px"></p></div>
+    </div>
+    <h3>Stage scores</h3>
+    <div id="dimBars"></div>
+    <h3>Do first: your priority moves</h3>
+    <ul class="plan" id="priorityPlan"></ul>
+    <h3>Your staged roadmap</h3>
+    <ul class="plan" id="roadmap"></ul>
+    <h3>Governance checks</h3>
+    <ul class="plan" id="govChecks"></ul>
+    <h3>Forward Deployed Engineering style handoff pack</h3>
+    <ul class="plan" id="fdePack"></ul>
+    <div class="actions-row">
+      <button type="button" id="copyPlan">Copy roadmap as text</button>
+      <button type="button" class="secondary" id="retake">Retake the assessment</button>
+    </div>
+    <p class="lede" id="copyNote" style="margin-top:10px"></p>
+  </section>
+
+  <section class="card">
+    <h2>Governance first: agentlint checks mapped to OT and IT safety controls</h2>
+    <p class="lede">Greg Lucas built agentlint, an open source linter that scores an agent configuration for governance risk before launch. In a plant, each check lands on a control that separates information from action, because the cost of confusing them is measured in safety and scrap, not in tickets. This mapping is the Prove stage made concrete.</p>
+    <table>
+      <tr><th>agentlint style check</th><th>What it catches</th><th>Safety or quality control it satisfies</th><th>Microsoft tooling</th></tr>
+      <tr><td>Named human owner on every agent</td><td>Orphaned agents nobody is accountable for</td><td>Named accountable ownership for every agent in the plant inventory, aligned to the quality management system</td><td>Agent registry in Azure AI Foundry, ownership attested in Microsoft Purview</td></tr>
+      <tr><td>No wildcard tool access</td><td>Agents that can reach any system or API by default</td><td>Least privilege with OT segmentation: agents read through governed brokers and cannot write into control or safety systems</td><td>Entra ID managed identities, Azure IoT Operations brokers, network segmentation enforced with Defender for IoT visibility</td></tr>
+      <tr><td>Approval gates on consequential actions</td><td>Decisions, messages, or transactions sent without a human where a human must stay in charge</td><td>Human authorization on physical world actions: work dispatch, schedule changes, product disposition, line stops</td><td>Copilot Studio and Dynamics 365 approval workflows, documented authorization in the work order record</td></tr>
+      <tr><td>No secrets or credentials in prompts</td><td>API keys, passwords, and tokens pasted into agent instructions</td><td>Credential protection across the edge estate, with no secrets in prompts or device configurations</td><td>Azure Key Vault, Azure Arc managed device identity, Microsoft Purview data loss prevention</td></tr>
+      <tr><td>Full interaction logging</td><td>Conversations and tool calls that leave no record</td><td>Plant floor audit trails: recommendations, approvals, and outcomes retained to the quality system and customer audit standard</td><td>Azure Monitor and Log Analytics, Microsoft Fabric audit datasets, Purview retention</td></tr>
+      <tr><td>Data source allow list</td><td>Agents reading data outside approved repositories</td><td>Data allow lists separating plant data zones: agents see the cells and lines their charter names, nothing wider</td><td>Microsoft Purview Data Map over Fabric and edge data products, scoped data access per agent</td></tr>
+      <tr><td>Kill switch and rollback</td><td>No fast way to stop a misbehaving agent in production</td><td>Kill switch and rollback that work at plant speed, including safe degradation to manual operation</td><td>Azure AI Foundry deployment controls, edge deployment rollback through Azure Arc, Defender for IoT automated alerts</td></tr>
+      <tr><td>Evaluation before and after launch</td><td>Agents shipped on demo impressions instead of measured quality</td><td>Evaluation before and after launch, including safety case review and drift monitoring on live process data</td><td>Azure AI Foundry evaluation and tracing, Fabric drift dashboards, scheduled safety reviews</td></tr>
+    </table>
+    <p class="lede" style="margin-top:12px">The pattern through every row: the safety evidence is produced as the agent runs, inside the segmented architecture, not assembled afterward for a customer audit. That is what lets a manufacturer scale agents across plants without scaling risk.</p>
+  </section>
+
+  <section class="card">
+    <h2>The first 90 days, the way a plant transformation team would run it</h2>
+    <ul class="plan">
+      <li><b>Days 1 to 30, Identify and charter:</b> run the census across plants with operations, EHS, quality, and OT security in the room. Pick one pattern, quality inspection or predictive maintenance, draw its physical action boundary in writing, and sign its charter before any hardware is touched.</li>
+      <li><b>Days 31 to 60, Design and prove the data:</b> stand up the edge ingestion and Fabric data products the pattern needs inside the segmented architecture. Build the proof of concept on Azure AI Foundry with evaluation and safety gates. Train the first crew of operators and technicians.</li>
+      <li><b>Days 61 to 90, Implement and measure:</b> pilot on one line or one plant area with human authorization on every physical action and full audit logging. Package the pattern pack for the next plant, and report Prove metrics, downtime, scrap, and override rates, to the governance body.</li>
+    </ul>
+  </section>
+
+  <footer>
+    Manufacturing Agentic Transformation Accelerator is an independent portfolio artifact by
+    <a href="https://www.linkedin.com/in/greg-lucas-28765b416/">Greg Lucas</a>
+    (pAIgeBreaker, AIccountable), creator of
+    <a href="https://github.com/THFC-COYS/agentlint">agentlint</a>,
+    <a href="https://business-agent-readiness.vercel.app">Business Agent Readiness</a>, and
+    <a href="https://courseagent-studio.vercel.app">CourseAgent Studio</a>.
+    Part of the <a href="https://agent-accelerator-atlas.vercel.app">Industry Agent Accelerator Atlas</a>.
+    Microsoft, Azure, Microsoft 365 Copilot, Copilot Studio, Azure AI Foundry, Azure OpenAI, Microsoft Fabric, Dynamics 365, Entra ID, and Microsoft Defender are trademarks of the Microsoft group of companies. Product names are used nominatively to describe platform mappings. This project is not affiliated with, sponsored by, or endorsed by Microsoft. MIT licensed.
+  </footer>
+</div>
+
+<script>
+"use strict";
+var SCALE=[{v:0,label:"Not started"},{v:1,label:"Ad hoc"},{v:2,label:"In progress"},{v:3,label:"Mostly in place"},{v:4,label:"In place and measured"}];
+var DIMENSIONS=[{"id":"identify","name":"Identify","focus":"Use case census, value cases, OT risk tiering","questions":["You have a written census of AI use cases across plants and functions, each with a named owner and a value case stated as downtime, scrap, schedule, or risk.","Every candidate use case is risk tiered, with anything that can influence physical processes, product disposition, or worker safety separated from information only uses.","Operations, EHS, quality, and OT security reviewed the census before any pilot was chosen, not after it was installed."]},{"id":"train","name":"Train","focus":"Operator, maintenance, and planner readiness","questions":["Operators, maintenance technicians, planners, and quality staff have role based training on what agents do, what they must never do, and the exact point where a human authorizes action.","Plant and enterprise leaders can explain the agent strategy, its OT boundaries, and its safety governance in plain language to the workforce and to customers.","Floor staff helped design the workflows they will run with agents, and their hardest real cases are in the pilot test set."]},{"id":"design","name":"Design","focus":"Segmented OT data, agent charters, physical action boundaries","questions":["The data an agent needs flows through governed, segmented architecture (edge brokers and Fabric data products), with OT and IT zones separated and lineage recorded.","Every planned agent has a written charter: owner, allowed actions, approval gates, data sources, kill switch, and an explicit list of physical actions it may never take.","Agents authenticate with scoped managed identities, and no agent credential can write into a control system, PLC, or safety system."]},{"id":"implement","name":"Implement","focus":"Pilots behind human authorization gates","questions":["Pilots run on Azure AI Foundry and the managed edge with evaluation gates, including safety review, before any line side exposure.","Physical world actions (dispatching work, changing a schedule, dispositioning product, stopping a line) sit behind human authorization inside the workflow, not in a policy document only.","Each pilot produces a reusable pattern pack: architecture, charter, evaluation results, and runbook that another plant can deploy again."]},{"id":"prove","name":"Prove","focus":"Plant floor audit trails, safety evidence, measured outcomes","questions":["Every production agent recommendation, approval, and outcome is logged with timestamps and identities, retained to the quality system standard, and a reviewer can reconstruct any decision.","Agent quality is measured on a schedule: flag precision, prediction lead time, override rate, and outcomes reported next to downtime, scrap, and delivery results.","A governance body with operations, quality, EHS, and OT security representation reviews agent performance and incidents, and can suspend an agent on evidence."]}];
+var STAGES={"1":{"name":"Stage 1: Census","blurb":"You are at the start. The win is a real census and one chartered, low risk pilot, with operations, EHS, quality, and OT security in the room from day one."},"2":{"name":"Stage 2: Charter","blurb":"Foundations are forming. Charter the first pattern, fix the data it needs, and run a bounded pilot behind approval gates."},"3":{"name":"Stage 3: Scale","blurb":"You can put agents into production workflows with governance running as routine. Package patterns for reuse across the manufacturer."},"4":{"name":"Stage 4: Transform","blurb":"Agents are part of how the manufacturer runs. Focus on the portfolio: shared data products, shared governance, and measured outcomes reported to leadership."}};
+var ACTIONS={"identify":{"low":["Run a two week use case census: every unit lists its top agent candidates with an owner and a value case, and risk tiers them with operations, EHS, quality, and OT security at the table.","Pick the first pattern by two filters: measurable value within one quarter, and a risk tier your governance can already support."],"mid":["Turn the census into a portfolio view: value, risk tier, data readiness, and owner for each candidate, reviewed quarterly by the manufacturing AI governance body.","Write the business case for pattern one with baseline numbers captured before the pilot, so the Prove stage has something to measure against."],"high":["Publish the census as the manufacturer agent inventory, linked to charters and evaluation records, so any oversight question starts from one source of truth."]},"train":{"low":["Brief every affected role before the pilot: what the agent does, what it must never do, and the exact moment a human decides. Collect their hardest cases into the test set.","Give leaders a one page talk track on the agent strategy, its limits, and its governance, tested in a mock mock customer audit."],"mid":["Run role based academies: operators, maintenance technicians, planners, and quality engineers each train on their own pattern, with certification tied to pilot access.","Put agent collaboration into performance expectations and coaching, so working with agents is the job, not an experiment beside the job."],"high":["Make training a launch gate: no pattern reaches a new population until that population training and certification are complete and recorded."]},"design":{"low":["Charter before code: owner, allowed actions, approval gates, data allow list, kill switch. No charter, no build. Score the charter with agentlint style checks.","Fix the data for pattern one only: governed data products in Microsoft Fabric under Purview governance and OT segmentation controls, instead of an organization wide data program first."],"mid":["Standardize the platform pattern: Azure AI Foundry for custom agents, Copilot Studio for business owned agents, one identity and logging standard for both.","Give every agent its own scoped identity and permissions, and test the kill switch with a live drill each quarter."],"high":["Run design reviews like risk reviews: charter, data lineage, evaluation plan, and rollback plan approved before production promotion."]},"implement":{"low":["Run the first pilot small and watched: one team, one pattern, human approval on every consequential action, full logging from the first interaction.","Set go or no go criteria before the pilot starts: accuracy floor, escalation ceiling, and zero tolerance items named in writing."],"mid":["Package every pilot as a pattern pack for the delivery team: architecture, charter, evaluation results, and runbook, deployable to the next unit.","Add evaluation gates to the release path: no version reaches users without passing the regression and safety suites."],"high":["Operate a pattern factory: intake from the census, charter review, pilot, pack, and scale as one repeatable pipeline with cycle time measured."]},"prove":{"low":["Turn on complete logging now: prompts, retrievals, tool calls, approvals, and outcomes, retained to your records standard and reviewable by a human.","Define the Prove metrics for pattern one: accuracy, escalation rate, human override rate, and the business outcome the pattern exists to move."],"mid":["Report agent performance in the same pack as business results, monthly, with incidents and overrides named and owned.","Schedule independent review: the manufacturing AI governance body samples real interactions and can suspend an agent on evidence."],"high":["Produce oversight evidence as a byproduct: charter, lineage, evaluation history, and decision logs exportable for reviewers without a special project."]}};
+var ROADMAPS={"early":["Days 1 to 30, Identify and charter: finish the census, tier the risk, pick one pattern (quality inspection or the predictive maintenance copilot are the usual first wins), sign its charter with operations, EHS, quality, and OT security.","Days 31 to 60, Design and train: build the governed data products in Microsoft Fabric under Purview governance and OT segmentation controls, stand up the proof of concept on Azure AI Foundry with evaluation gates, train the pilot cohort.","Days 61 to 90, Implement and prove: bounded pilot behind approval gates with full logging, then the pattern pack handoff and a Prove report with baseline versus pilot outcomes."],"scale":["Quarter 1, Scale the proven patterns: promote two chartered patterns to production, extend the pattern pack library, and put agent metrics into the monthly business review.","Quarter 2, Widen the portfolio: onboard the next unit from the census, standardize the platform pattern, automate evaluation gates in the release path.","Quarter 3, Prove at portfolio level: reviewer ready evidence export, portfolio level risk reporting, and a leadership outcomes review."],"transform":["Operate the pattern factory as a product line: census intake, charter review, pilot, pack, and scale with cycle time and outcomes measured per pattern.","Extend to proactive and cross enterprise patterns: the same governance spine, wider reach only where Prove metrics stay green.","Feed field evidence back into the roadmap quarterly: overrides, incidents, and reviewer feedback become the next census priorities."]};
+var GOV_CHECKS=[{"label":"Complete decision logging on the plant floor audit trail standard","dim":"prove","idx":0},{"label":"Scheduled quality measurement, including override and safety metrics","dim":"prove","idx":1},{"label":"Governance review with power to suspend an agent","dim":"prove","idx":2},{"label":"Written agent charter before build, with the physical action boundary stated","dim":"design","idx":1}];
+var GOV_STATIC_CHECKS=["Charter on file for every production agent, owner named and current","Incident path tested: a named human can suspend any agent within one hour","Records retention verified for agent logs against the organization schedule"];
+var HANDOFF={"title":"Forward Deployed Engineering style handoff pack","items":["Pattern architecture: services, data flows, and integration points, as deployed in the pilot","The signed agent charter: owner, allowed actions, approval gates, data allow list, kill switch","Evaluation evidence: regression and safety results, accuracy and escalation baselines","Runbook: monitoring, incident response, rollback, and the named on call owner"],"lowProve":"Logging and evidence plan: close the Prove gaps above first, because the delivery team cannot scale what the organization cannot audit.","lowDesign":"Data remediation list: the Microsoft Fabric data products and Purview governance and OT segmentation controls controls the pattern still needs before scale."};
+var PLAN_TITLE="MANUFACTURING AGENTIC TRANSFORMATION ROADMAP";
+var PLAN_FOOTER="Generated by the Manufacturing Agentic Transformation Accelerator (Identify to Prove arc) by Greg Lucas. Independent project, not affiliated with Microsoft.";
+function dimensionScore(values){var raw=0,i;for(i=0;i<values.length;i++)raw+=values[i];return Math.round((raw/(values.length*4))*100);}
+function stageFor(o){if(o>=75)return 4;if(o>=50)return 3;if(o>=25)return 2;return 1;}
+function bandFor(s){if(s<40)return "low";if(s<70)return "mid";return "high";}
+function statusFor(v){if(v>=3)return{cls:"ok",text:"In place"};if(v>=1)return{cls:"partial",text:"Partial"};return{cls:"missing",text:"Missing"};}
+function computeScores(answers){var dims={},total=0,i,d;for(i=0;i<DIMENSIONS.length;i++){d=DIMENSIONS[i];dims[d.id]=dimensionScore(answers[d.id]);total+=dims[d.id];}var overall=Math.round(total/DIMENSIONS.length);return{dims:dims,overall:overall,stage:stageFor(overall)};}
+function buildPlan(answers,scores){var sorted=DIMENSIONS.slice().sort(function(a,b){return scores.dims[a.id]-scores.dims[b.id];});var priority=[],i,d,acts,j;for(i=0;i<3;i++){d=sorted[i];acts=ACTIONS[d.id][bandFor(scores.dims[d.id])];for(j=0;j<acts.length;j++)priority.push(d.name+": "+acts[j]);}
+var roadmap;if(scores.stage<=2)roadmap=ROADMAPS.early;else if(scores.stage===3)roadmap=ROADMAPS.scale;else roadmap=ROADMAPS.transform;
+var govOut=GOV_CHECKS.map(function(c){var v=answers[c.dim][c.idx];var s=statusFor(v);return{label:c.label,cls:s.cls,text:s.text};});
+GOV_STATIC_CHECKS.forEach(function(label){govOut.push({label:label,cls:"",text:"Verify before launch"});});
+var fde=HANDOFF.items.slice();if(scores.dims.prove<50)fde.unshift(HANDOFF.lowProve);if(scores.dims.design<50)fde.push(HANDOFF.lowDesign);
+return{priority:priority,roadmap:roadmap,governance:govOut,fde:fde};}
+function planAsText(answers,scores,plan){var lines=[];lines.push(PLAN_TITLE);lines.push("Overall score: "+scores.overall+"/100");lines.push("Maturity stage: "+STAGES[scores.stage].name);lines.push("");lines.push("Stage scores:");DIMENSIONS.forEach(function(d){lines.push("- "+d.name+": "+scores.dims[d.id]+"/100");});lines.push("");lines.push("Do first:");plan.priority.forEach(function(s){lines.push("- "+s);});lines.push("");lines.push("Staged roadmap:");plan.roadmap.forEach(function(s){lines.push("- "+s);});lines.push("");lines.push("Governance checks:");plan.governance.forEach(function(c){lines.push("- ["+c.text+"] "+c.label);});lines.push("");lines.push(HANDOFF.title+":");plan.fde.forEach(function(s){lines.push("- "+s);});lines.push("");lines.push(PLAN_FOOTER);return lines.join("\n");}
+if(typeof document!=="undefined"){
+var questionsEl=document.getElementById("questions");
+DIMENSIONS.forEach(function(d){var fs=document.createElement("fieldset");fs.id="fs-"+d.id;var legend=document.createElement("legend");legend.textContent=d.name+" \u00b7 "+d.focus;fs.appendChild(legend);d.questions.forEach(function(q,qi){var div=document.createElement("div");div.className="q";var p=document.createElement("p");p.textContent=q;div.appendChild(p);var opts=document.createElement("div");opts.className="opts";SCALE.forEach(function(s){var label=document.createElement("label");var input=document.createElement("input");input.type="radio";input.name=d.id+"-"+qi;input.value=s.v;label.appendChild(input);label.appendChild(document.createTextNode(s.label));opts.appendChild(label);});div.appendChild(opts);fs.appendChild(div);});questionsEl.appendChild(fs);});
+var lastReport=null;
+document.getElementById("assessment").addEventListener("submit",function(ev){ev.preventDefault();var answers={},missing=[];DIMENSIONS.forEach(function(d){answers[d.id]=[];d.questions.forEach(function(q,qi){var sel=document.querySelector('input[name="'+d.id+"-"+qi+'"]:checked');document.getElementById("fs-"+d.id).classList.remove("missing");if(!sel){missing.push(d.id);answers[d.id].push(0);}else answers[d.id].push(parseInt(sel.value,10));});});
+var err=document.getElementById("formError");if(missing.length){var uniq=missing.filter(function(v,i){return missing.indexOf(v)===i;});uniq.forEach(function(id){document.getElementById("fs-"+id).classList.add("missing");});err.style.display="block";err.textContent="Please answer every question. Missing answers are highlighted above.";return;}err.style.display="none";
+var scores=computeScores(answers);var plan=buildPlan(answers,scores);lastReport=planAsText(answers,scores,plan);
+document.getElementById("overallScore").textContent=scores.overall;document.getElementById("stageBadge").textContent=STAGES[scores.stage].name;document.getElementById("stageBlurb").textContent=STAGES[scores.stage].blurb;
+var bars=document.getElementById("dimBars");bars.innerHTML="";DIMENSIONS.forEach(function(d){var row=document.createElement("div");row.className="bar-row";var name=document.createElement("span");name.textContent=d.name;var bar=document.createElement("div");bar.className="bar";var fill=document.createElement("i");fill.style.width=scores.dims[d.id]+"%";bar.appendChild(fill);var val=document.createElement("span");val.textContent=scores.dims[d.id];row.appendChild(name);row.appendChild(bar);row.appendChild(val);bars.appendChild(row);});
+function fillList(id,items,isGov){var ul=document.getElementById(id);ul.innerHTML="";items.forEach(function(item){var li=document.createElement("li");if(isGov){var st=document.createElement("span");st.className="status "+item.cls;st.textContent=item.text+": ";li.appendChild(st);li.appendChild(document.createTextNode(item.label));}else{li.textContent=item;}ul.appendChild(li);});}
+fillList("priorityPlan",plan.priority,false);fillList("roadmap",plan.roadmap,false);fillList("govChecks",plan.governance,true);fillList("fdePack",plan.fde,false);
+var results=document.getElementById("results");results.style.display="block";document.getElementById("copyNote").textContent="";results.scrollIntoView({behavior:"smooth"});});
+document.getElementById("copyPlan").addEventListener("click",function(){var note=document.getElementById("copyNote");if(!lastReport)return;function done(){note.textContent="Roadmap copied. Paste it into your notes or share it with your team.";}if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(lastReport).then(done,function(){note.textContent="Copy was blocked by the browser. Select the report on screen instead.";});}else{note.textContent="Clipboard is not available in this browser. Select the report on screen instead.";}});
+document.getElementById("retake").addEventListener("click",function(){document.getElementById("assessment").reset();document.getElementById("results").style.display="none";window.scrollTo({top:0,behavior:"smooth"});});
+}
+</script>
+</body>
+</html>
